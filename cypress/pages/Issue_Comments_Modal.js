@@ -3,8 +3,8 @@ class IssueModal {
     this.submitButton = 'button[type="submit"]';
     this.issueModal = '[data-testid="modal:issue-create"]';
     this.issueDetailModal = '[data-testid="modal:issue-details"]';
-    this.title = 'input[name="L5 Timing"]';
-    this.issueType = '[data-testid="select:Task"]';
+    this.title = 'input[name="title"]';
+    this.issueType = '[data-testid="select:type"]';
     this.descriptionField = ".ql-editor";
     this.assignee = '[data-testid="select:userIds"]';
     this.backlogList = '[data-testid="board-list:backlog"]';
@@ -12,7 +12,7 @@ class IssueModal {
     this.deleteButton = '[data-testid="icon:trash"]';
     this.deleteButtonName = "Delete issue";
     this.cancelDeletionButtonName = "Cancel";
-    this.confirmationPopup = '[data-testid="modal:confirm"]';
+    //this.confirmationPopup = '[data-testid="modal:confirm"]';
     this.closeDetailModalButton = '[data-testid="icon:close"]';
     // CommentsModal
     this.commentTextArea = 'textarea[placeholder="Add a comment..."]';
@@ -63,28 +63,19 @@ class IssueModal {
   getIssueDetailModal() {
     return cy.get(this.issueDetailModal);
   }
-  // TIME TRACKING MODAL
-  /*const randomWord = faker.word.noun();
-const randomWords = faker.word.words(5);
-let issueTitle = randomWord;
-let issueDescription = randomWords;*/
 
-  // COMMENT ISSUEMODAL
+  // commentsModal
+  //createAcomment() {
+  createComment(comment) {
+    cy.contains("Add a comment...").click();
+    cy.get(this.commentTextArea).type(comment);
+    cy.get(this.saveCommentButton).click().should("not.exist");
+    cy.contains("Add a comment...").should("exist");
+  }
 
-  /* const GetIssueCommentsModal = () => cy.get(issuemodal);
-const issueComment = '[data-testid="issue-comment"]';
-const comment = "L5_Kommentaari";
-const commentEdited = "L5_Kommentaari_EDITED";
-const previousComment = "A lovely sunset.";
-const confirmDeleteWindow = '[data-testid="modal:confirm"]';
-const addNewComment = 'textarea[placeholder="Add a comment..."]';
-const commentBox = '[data-testid="issue-comment"]';
-const confirmDeleteButton = ("button", "Delete comment");
-const randomWord = faker.word.noun();
-const randomWords = faker.word.words(5);
-let issueTitle = "randomWord";
-let issueDescription = "randomWords";
-import { faker } from "@faker-js/faker";*/
+  assertCommentExists(comment) {
+    cy.get(this.commentBox).should("contain", comment);
+  }
 
   // ADD COMMENT
 
@@ -114,21 +105,28 @@ import { faker } from "@faker-js/faker";*/
       .wait(2000)
       .clear()
       .type(commentEdited);
+
     cy.get(this.saveCommentButton).click().should("not.exist");
   }
+
   // DELETE COMMENT
   clickDeleteComment() {
-    cy.get(this.commentBox).closest(this.commentBox).contains("Delete").click();
+    cy.get(this.commentBox)
+
+      .closest(this.commentBox)
+      .contains("Delete")
+      .click();
   }
+
   confirmDeleteComment() {
     cy.get('[data-testid="modal:confirm"]')
       .contains("button", "Delete comment")
       .click()
       .should("not.exist");
+
     cy.get(this.confirmDeleteModal).should("not.exist");
   }
 
-  // ISSUE MODAL //
   selectIssueType(issueType) {
     cy.get(this.issueType).click("bottomRight");
     cy.get(`[data-testid="select-option:${issueType}"]`)

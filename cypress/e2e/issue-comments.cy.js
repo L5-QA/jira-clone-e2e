@@ -41,7 +41,7 @@ describe("Issue comments creating, editing and deleting", () => {
     getIssueDetailsModal().find(commentEdited).should("not.exist");
   }
 
-  it("Should create a comment successfully", () => {
+  it.only("Should create a comment successfully", () => {
     getIssueDetailsModal().within(() => {
       cy.contains("Add a comment...").click();
       cy.get(addNewComment).type(comment);

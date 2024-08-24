@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import IssueModal from "../pages/Issue_Comments_Modal";
+import IssueModal from "../pages/Issue_Modal.js";
 
 describe("Issue create", () => {
   beforeEach(() => {
@@ -221,6 +221,7 @@ describe("Issue create", () => {
   it.only("POM Should creat issue successfully", () => {
     IssueModal.getIssueDetailModal().within(() => {
       IssueModal.createIssue(issueDetails)();
+      cy.wait(20000);
     });
     cy.wait(1500);
   });

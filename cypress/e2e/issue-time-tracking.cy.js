@@ -1,5 +1,5 @@
 import IssueModal from "../pages/Issue_Comments_Modal";
-// For testing needs to be download cypress/pages/Issue_Comment Modal.js
+// For testing needs to be download cypress/pages/Issue_Comment_Modal.js
 const issuetitle2 = "L5 Timing";
 const issuetitle = "You can use rich text with images in issue descriptions.";
 const issuemodal = '[data-testid="modal:issue-details"]';
